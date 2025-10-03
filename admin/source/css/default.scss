@@ -1,0 +1,232 @@
+$color-primary: #0073aa;
+$color-primary-hover: #005a87;
+$color-text: #555d66;
+$color-text-dark: #23282d;
+$color-border: #ccd0d4;
+$color-separator: #ddd;
+$color-bg-white: #fff;
+$color-bg-hover: #f9f9f9;
+
+$spacing-xs: 5px;
+$spacing-sm: 10px;
+$spacing-md: 12px;
+$spacing-lg: 15px;
+$spacing-xl: 20px;
+
+$font-size-small: 13px;
+$font-size-base: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-size-xlarge: 22px;
+$font-size-xxlarge: 28px;
+
+// Admin Header
+.bl-admin-header {
+    background: $color-bg-white;
+    border-bottom: 1px solid $color-border;
+    margin: 0 0 $spacing-sm (-$spacing-xl);
+    padding: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.bl-admin-header-content {
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+// Branding
+.bl-branding {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: 0;
+    
+    .dashicons {
+        font-size: $font-size-xxlarge;
+        width: $font-size-xxlarge;
+        height: $font-size-xxlarge;
+        color: $color-primary;
+    }
+    
+    h1 {
+        margin: 0;
+        font-size: $font-size-xlarge;
+        font-weight: 600;
+        color: $color-text-dark;
+    }
+}
+
+// Admin Navigation
+.bl-admin-nav {
+    display: flex;
+    gap: 0;
+    align-items: center;
+}
+
+.bl-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: $spacing-lg $spacing-md;
+    color: $color-text;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    font-size: $font-size-base;
+    font-weight: 500;
+    
+    &:hover {
+        color: $color-primary;
+        background: $color-bg-hover;
+    }
+    
+    &.active {
+        color: $color-primary;
+        border-bottom-color: $color-primary;
+        background: $color-bg-hover;
+    }
+    
+    .dashicons {
+        font-size: $font-size-large;
+        width: $font-size-large;
+        height: $font-size-large;
+    }
+}
+
+// Admin Content
+.bl-admin-content {
+    margin-top: 0 !important;
+}
+
+// Admin Footer
+.bl-admin-footer {
+    background: $color-bg-white;
+    border-top: 1px solid $color-border;
+    margin: $spacing-xl 0 0 (-$spacing-xl);
+    padding: $spacing-sm $spacing-xl;
+    box-shadow: 0 (-1px) 1px rgba(0, 0, 0, 0.04);
+}
+
+.bl-admin-footer-content {
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+}
+
+.bl-footer-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-size: $font-size-small;
+    color: $color-text;
+}
+
+.bl-version {
+    color: $color-text;
+}
+
+.bl-separator {
+    color: $color-separator;
+}
+
+.bl-github-link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: 500;
+    
+    &:hover {
+        color: $color-primary-hover;
+    }
+    
+    .dashicons {
+        font-size: $font-size-medium;
+        width: $font-size-medium;
+        height: $font-size-medium;
+    }
+}
+
+.bl-footer-credits {
+    font-size: $font-size-small;
+    color: $color-text;
+    
+    a {
+        color: $color-primary;
+        text-decoration: none;
+        
+        &:hover {
+            color: $color-primary-hover;
+            text-decoration: underline;
+        }
+    }
+}
+
+// Table overflow
+.bl-wp-table-overflow {
+    overflow: auto;
+    
+    th {
+        text-wrap: nowrap;
+    }
+}
+
+// Responsive Header/Footer
+@media (max-width: 782px) {
+    .bl-admin-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 0 0 $spacing-lg;
+        margin-left: -14px;
+    }
+    
+    .bl-branding {
+        padding: $spacing-md $spacing-xl;
+    }
+    
+    .bl-admin-nav {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .bl-nav-item {
+        padding: $spacing-md $spacing-xl;
+        font-size: $font-size-small;
+        white-space: nowrap;
+    }
+    
+    .bl-admin-footer {
+        margin-left: -14px;
+        margin-right: 0;
+    }
+    
+    .bl-admin-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        gap: 0;
+    }
+    
+    .bl-footer-info {
+        flex-wrap: wrap;
+    }
+}
+
+.page-title-action {
+    vertical-align: middle !important;
+}
+
+.submit {
+    padding: 0;
+    margin: 0;
+}
