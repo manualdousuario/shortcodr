@@ -1,4 +1,4 @@
-=== Shortcodr ===
+=== Shortlinkr ===
 Contributors: butialabs
 Donate link: https://butialabs.com
 Tags: url shortener, link shortener, short links, analytics, campaigns
@@ -13,7 +13,7 @@ Shorten links, organize campaigns, and see who's clicking - all from your WordPr
 
 == About This Plugin ==
 
-Shortcodr turns long, messy URLs into short, clean links that are easy to share. Everything runs directly from your WordPress dashboard - no external services needed.
+Shortlinkr turns long, messy URLs into short, clean links that are easy to share. Everything runs directly from your WordPress dashboard - no external services needed.
 
 **What You Can Do:**
 
@@ -44,7 +44,7 @@ Your data stays in your own WordPress database. Nothing gets sent to outside ser
 
 1. Log into your WordPress dashboard
 2. Go to Plugins > Add New
-3. Search for "Shortcodr"
+3. Search for "Shortlinkr"
 4. Click "Install Now" then "Activate"
 
 **Manual way:**
@@ -57,7 +57,7 @@ Your data stays in your own WordPress database. Nothing gets sent to outside ser
 
 **After you activate it:**
 
-1. Look for "Shortcodr" in your WordPress menu
+1. Look for "Shortlinkr" in your WordPress menu
 2. Create your first short link
 3. Set it up how you like
 

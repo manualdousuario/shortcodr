@@ -2,8 +2,6 @@
     'use strict';
     document.addEventListener('DOMContentLoaded', function() {
 
-        // ===== UTILITY FUNCTIONS =====
-        // AJAX Helper
         function ajax(url, options) {
             return fetch(url, {
                 method: options.method || 'POST',
@@ -16,13 +14,11 @@
             });
         }
     
-        // ===== COPY URL TO CLIPBOARD =====
-        document.querySelectorAll('.shortcodr-copy-url').forEach(function(button) {
+        document.querySelectorAll('.shortlinkr-copy-url').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 var url = this.getAttribute('data-url');
                 
-                // Try to copy to clipboard
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(function() {
                         showCopySuccess(button);
@@ -35,7 +31,6 @@
             });
         });
 
-        // Fallback copy method
         function fallbackCopyToClipboard(text, button) {
             var textArea = document.createElement('textarea');
             textArea.value = text;
@@ -57,21 +52,19 @@
             document.body.removeChild(textArea);
         }
 
-        // Show copy success feedback
         function showCopySuccess(button) {
             var originalTitle = button.getAttribute('title');
             var originalClass = button.className;
             
-            button.classList.add('shortcodr-copy-success');
+            button.classList.add('shortlinkr-copy-success');
             button.setAttribute('title', 'Copied!');
             
             setTimeout(function() {
-                button.classList.remove('shortcodr-copy-success');
+                button.classList.remove('shortlinkr-copy-success');
                 button.setAttribute('title', originalTitle);
             }, 2000);
         }
 
-        // ===== GENERATE RANDOM SLUG =====
         var generateSlugBtn = document.getElementById('generate-slug');
         if (generateSlugBtn) {
             generateSlugBtn.addEventListener('click', function(e) {
@@ -82,11 +75,11 @@
                 button.textContent = 'Generating...';
                 button.disabled = true;
                 
-                ajax(shortcodr_ajax.ajax_url, {
+                ajax(shortlinkr_ajax.ajax_url, {
                     method: 'POST',
                     data: {
-                        action: 'shortcodr_generate_slug',
-                        nonce: shortcodr_ajax.nonce
+                        action: 'shortlinkr_generate_slug',
+                        nonce: shortlinkr_ajax.nonce
                     }
                 }).then(function(response) {
                     if (response.success) {
@@ -104,7 +97,6 @@
             });
         }
 
-        // ===== UPDATE SLUG PREVIEW =====
         var slugInput = document.getElementById('slug');
         if (slugInput) {
             slugInput.addEventListener('input', updateSlugPreview);
@@ -120,8 +112,7 @@
             }
         }
 
-        // ===== TOGGLE URL STATUS =====
-        document.querySelectorAll('.shortcodr-toggle-status').forEach(function(button) {
+        document.querySelectorAll('.shortlinkr-toggle-status').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 var id = this.getAttribute('data-id');
@@ -130,11 +121,11 @@
                 
                 button.disabled = true;
                 
-                ajax(shortcodr_ajax.ajax_url, {
+                ajax(shortlinkr_ajax.ajax_url, {
                     method: 'POST',
                     data: {
-                        action: 'shortcodr_toggle_status',
-                        nonce: shortcodr_ajax.nonce,
+                        action: 'shortlinkr_toggle_status',
+                        nonce: shortlinkr_ajax.nonce,
                         id: id,
                         current_status: currentStatus
                     }
@@ -142,15 +133,13 @@
                     if (response.success) {
                         var newStatus = response.data.new_status;
                         
-                        // Update button
                         button.setAttribute('data-status', newStatus);
                         button.textContent = newStatus === 'active' ? 'Deactivate' : 'Activate';
                         
-                        // Update status column
-                        var statusCol = row.querySelector('.column-status .shortcodr-status');
+                        var statusCol = row.querySelector('.column-status .shortlinkr-status');
                         if (statusCol) {
-                            statusCol.classList.remove('shortcodr-status-active', 'shortcodr-status-inactive');
-                            statusCol.classList.add('shortcodr-status-' + newStatus);
+                            statusCol.classList.remove('shortlinkr-status-active', 'shortlinkr-status-inactive');
+                            statusCol.classList.add('shortlinkr-status-' + newStatus);
                             statusCol.textContent = newStatus === 'active' ? 'Active' : 'Inactive';
                         }
                     } else {
@@ -164,12 +153,11 @@
             });
         });
 
-        // ===== DELETE URL =====
-        document.querySelectorAll('.shortcodr-delete-url').forEach(function(button) {
+        document.querySelectorAll('.shortlinkr-delete-url').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                if (!confirm(shortcodr_ajax.confirm_delete)) {
+                if (!confirm(shortlinkr_ajax.confirm_delete)) {
                     return;
                 }
                 
@@ -178,11 +166,11 @@
                 
                 button.disabled = true;
                 
-                ajax(shortcodr_ajax.ajax_url, {
+                ajax(shortlinkr_ajax.ajax_url, {
                     method: 'POST',
                     data: {
-                        action: 'shortcodr_delete_url',
-                        nonce: shortcodr_ajax.nonce,
+                        action: 'shortlinkr_delete_url',
+                        nonce: shortlinkr_ajax.nonce,
                         id: id
                     }
                 }).then(function(response) {
@@ -202,7 +190,6 @@
             });
         });
 
-        // ===== VALIDATE SLUG INPUT =====
         if (slugInput) {
             slugInput.addEventListener('input', function() {
                 var value = this.value;
@@ -214,20 +201,17 @@
             });
         }
 
-        // ===== FORM VALIDATION =====
-        document.querySelectorAll('.shortcodr-form').forEach(function(form) {
+        document.querySelectorAll('.shortlinkr-form').forEach(function(form) {
             form.addEventListener('submit', function(e) {
                 var targetUrl = form.querySelector('#target_url');
                 var slug = form.querySelector('#slug');
                 
-                // Validate target URL
                 if (targetUrl && (!targetUrl.value || !isValidUrl(targetUrl.value))) {
                     alert('Please enter a valid target URL');
                     e.preventDefault();
                     return false;
                 }
                 
-                // Validate slug if provided
                 if (slug && slug.value && !/^[a-zA-Z0-9\-_]+$/.test(slug.value)) {
                     alert('Slug can only contain letters, numbers, hyphens and underscores');
                     e.preventDefault();
@@ -236,7 +220,6 @@
             });
         });
 
-        // URL validation function
         function isValidUrl(string) {
             try {
                 new URL(string);
@@ -246,8 +229,7 @@
             }
         }
 
-        // ===== DELETE CAMPAIGN CONFIRMATION =====
-        document.querySelectorAll('.shortcodr-delete-campaign').forEach(function(link) {
+        document.querySelectorAll('.shortlinkr-delete-campaign').forEach(function(link) {
             link.addEventListener('click', function(e) {
                 var urlCount = parseInt(this.getAttribute('data-url-count'));
                 var message = 'Are you sure you want to delete this campaign?';
@@ -262,14 +244,12 @@
             });
         });
 
-        // ===== SETTINGS PAGE - URL PATTERN VALIDATION =====
-        var patternInput = document.getElementById('shortcodr_base_url_pattern');
+        var patternInput = document.getElementById('shortlinkr_base_url_pattern');
         var validationMsg = document.getElementById('pattern-validation-message');
         var submitBtn = document.querySelector('input[type="submit"]');
         var validationTimeout;
 
         if (patternInput && validationMsg) {
-            // Update URL preview when base pattern changes
             patternInput.addEventListener('input', function() {
                 var baseUrl = this.getAttribute('data-base-url') || window.location.origin + '/';
                 var pattern = this.value.trim();
@@ -277,34 +257,31 @@
                     pattern = 'go';
                 }
                 var preview = baseUrl + pattern + '/example';
-                var previewElement = document.getElementById('shortcodr-url-preview');
+                var previewElement = document.getElementById('shortlinkr-url-preview');
                 if (previewElement) {
                     previewElement.textContent = preview;
                 }
                 
-                // Clear previous timeout
                 clearTimeout(validationTimeout);
                 
-                // Validate pattern after user stops typing
                 validationTimeout = setTimeout(function() {
                     validatePattern(pattern);
                 }, 500);
             });
         }
 
-        // Validate pattern function
         function validatePattern(pattern) {
             if (pattern === '') {
                 pattern = 'go';
             }
             
-            var nonce = document.querySelector('input[name="shortcodr_settings_nonce"]');
+            var nonce = document.querySelector('input[name="shortlinkr_settings_nonce"]');
             if (!nonce) return;
             
             ajax(window.location.origin + '/wp-admin/admin-ajax.php', {
                 method: 'POST',
                 data: {
-                    action: 'shortcodr_validate_pattern',
+                    action: 'shortlinkr_validate_pattern',
                     nonce: nonce.value,
                     pattern: pattern
                 }
@@ -334,11 +311,10 @@
             });
         }
 
-        // Ensure at least administrator is always checked
-        document.querySelectorAll('input[name="shortcodr_user_capabilities[]"]').forEach(function(checkbox) {
+        document.querySelectorAll('input[name="shortlinkr_user_capabilities[]"]').forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
-                var checkedBoxes = document.querySelectorAll('input[name="shortcodr_user_capabilities[]"]:checked');
-                var adminCheckbox = document.getElementById('shortcodr_capability_administrator');
+                var checkedBoxes = document.querySelectorAll('input[name="shortlinkr_user_capabilities[]"]:checked');
+                var adminCheckbox = document.getElementById('shortlinkr_capability_administrator');
                 
                 if (checkedBoxes.length === 0 && adminCheckbox) {
                     adminCheckbox.checked = true;
@@ -347,7 +323,6 @@
             });
         });
 
-        // ===== IMPORT/EXPORT PAGE - EXPORT JSON =====
         var exportJsonBtn = document.getElementById('export-json-btn');
         var exportStatus = document.getElementById('export-status');
         
@@ -360,20 +335,19 @@
                 btn.textContent = 'Exporting...';
                 exportStatus.style.display = 'none';
                 
-                ajax(shortcodr_ajax.ajax_url, {
+                ajax(shortlinkr_ajax.ajax_url, {
                     method: 'POST',
                     data: {
-                        action: 'shortcodr_export_json',
-                        nonce: shortcodr_ajax.nonce
+                        action: 'shortlinkr_export_json',
+                        nonce: shortlinkr_ajax.nonce
                     }
                 }).then(function(response) {
                     if (response.success) {
-                        // Create download link
                         var blob = new Blob([response.data.json], {type: 'application/json'});
                         var url = window.URL.createObjectURL(blob);
                         var a = document.createElement('a');
                         a.href = url;
-                        a.download = 'shortcodr-export-' + new Date().toISOString().split('T')[0] + '.json';
+                        a.download = 'shortlinkr-export-' + new Date().toISOString().split('T')[0] + '.json';
                         document.body.appendChild(a);
                         a.click();
                         window.URL.revokeObjectURL(url);

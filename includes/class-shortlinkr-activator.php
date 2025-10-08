@@ -1,7 +1,6 @@
 <?php
 
-// Plugin activation
-class shortcodr_Activator {
+class shortlinkr_Activator {
 
     public static function activate($network_wide = false) {
         
@@ -26,13 +25,12 @@ class shortcodr_Activator {
         flush_rewrite_rules();
     }
     
-    // Creates database tables
     private static function create_tables() {
         global $wpdb;
         
         $charset_collate = $wpdb->get_charset_collate();
         
-        $campaigns_table = $wpdb->prefix . 'shortcodr_campaigns';
+        $campaigns_table = $wpdb->prefix . 'shortlinkr_campaigns';
         $campaigns_sql = "CREATE TABLE $campaigns_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             name varchar(255) NOT NULL,
@@ -44,7 +42,7 @@ class shortcodr_Activator {
             KEY created_by (created_by)
         ) $charset_collate;";
         
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
         $urls_sql = "CREATE TABLE $urls_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             slug varchar(255) NOT NULL,
@@ -62,7 +60,7 @@ class shortcodr_Activator {
             KEY status (status)
         ) $charset_collate;";
         
-        $analytics_table = $wpdb->prefix . 'shortcodr_analytics';
+        $analytics_table = $wpdb->prefix . 'shortlinkr_analytics';
         $analytics_sql = "CREATE TABLE $analytics_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             url_id bigint(20) NOT NULL,
@@ -80,20 +78,19 @@ class shortcodr_Activator {
         dbDelta($analytics_sql);
     }
     
-    // Sets default options
     private static function set_default_options() {
-        if (!get_option('shortcodr_base_url_pattern')) {
-            add_option('shortcodr_base_url_pattern', '/go/');
+        if (!get_option('shortlinkr_base_url_pattern')) {
+            add_option('shortlinkr_base_url_pattern', '/go/');
         }
         
-        if (!get_option('shortcodr_default_redirect_type')) {
-            add_option('shortcodr_default_redirect_type', '301');
+        if (!get_option('shortlinkr_default_redirect_type')) {
+            add_option('shortlinkr_default_redirect_type', '301');
         }
         
-        if (!get_option('shortcodr_user_capabilities')) {
-            add_option('shortcodr_user_capabilities', array('administrator'));
+        if (!get_option('shortlinkr_user_capabilities')) {
+            add_option('shortlinkr_user_capabilities', array('administrator'));
         }
         
-        add_option('SHORTCODR_VERSION', SHORTCODR_VERSION);
+        add_option('SHORTLINKR_VERSION', SHORTLINKR_VERSION);
     }
 }

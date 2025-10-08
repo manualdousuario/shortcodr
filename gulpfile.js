@@ -18,7 +18,7 @@ const paths = {
 
 function processJSAdmin() {
     return gulp.src(paths.jsAdmin.src)
-        .pipe(concat('shortcodr-admin.js'))
+        .pipe(concat('shortlinkr-admin.js'))
         .pipe(gulp.dest(paths.jsAdmin.dest))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
@@ -28,7 +28,7 @@ function processJSAdmin() {
 function processSCSSAdmin() {
     return gulp.src(paths.scssAdmin.src)
         .pipe(sass().on('error', sass.logError))
-        .pipe(concat('shortcodr-admin.css'))
+        .pipe(concat('shortlinkr-admin.css'))
         .pipe(gulp.dest(paths.scssAdmin.dest))
         .pipe(cleanCSS())
         .pipe(rename({ suffix: '.min' }))

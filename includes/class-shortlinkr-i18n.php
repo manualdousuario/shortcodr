@@ -1,11 +1,10 @@
 <?php
 
-// Manages plugin translations
-class shortcodr_i18n {
+class shortlinkr_i18n {
 
     public function load_plugin_textdomain() {
         load_plugin_textdomain(
-            'shortcodr',
+            'shortlinkr',
             false,
             dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
         );

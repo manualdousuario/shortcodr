@@ -1,27 +1,16 @@
 <?php
-/**
- * Fired when the plugin is uninstalled.
- *
- * @package    Shortcodr
- * @since      1.0.0
- */
-
-// If uninstall not called from WordPress, then exit.
 if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
 
-/**
- * Delete plugin data for a single site.
- */
-function shortcodr_delete_single_site_data() {
+function shortlinkr_delete_single_site_data() {
     global $wpdb;
     
     // Delete plugin tables
     $tables = array(
-        $wpdb->prefix . 'shortcodr_urls',
-        $wpdb->prefix . 'shortcodr_campaigns',
-        $wpdb->prefix . 'shortcodr_analytics',
+        $wpdb->prefix . 'shortlinkr_urls',
+        $wpdb->prefix . 'shortlinkr_campaigns',
+        $wpdb->prefix . 'shortlinkr_analytics',
     );
     
     foreach ($tables as $table) {
@@ -29,19 +18,16 @@ function shortcodr_delete_single_site_data() {
     }
     
     // Delete plugin options
-    delete_option('shortcodr_version');
-    delete_option('shortcodr_base_pattern');
-    delete_option('shortcodr_default_redirect_type');
-    delete_option('shortcodr_track_analytics');
+    delete_option('shortlinkr_version');
+    delete_option('shortlinkr_base_pattern');
+    delete_option('shortlinkr_default_redirect_type');
+    delete_option('shortlinkr_track_analytics');
     
     // Delete any transients
-    delete_transient('shortcodr_stats');
+    delete_transient('shortlinkr_stats');
 }
 
-/**
- * Delete plugin data from all sites in a network.
- */
-function shortcodr_delete_network_data() {
+function shortlinkr_delete_network_data() {
     global $wpdb;
     
     // Get all blog IDs
@@ -50,20 +36,18 @@ function shortcodr_delete_network_data() {
     // Delete data for each blog
     foreach ($blog_ids as $blog_id) {
         switch_to_blog($blog_id);
-        shortcodr_delete_single_site_data();
+        shortlinkr_delete_single_site_data();
         restore_current_blog();
     }
     
     // Delete network-wide options if any
-    delete_site_option('shortcodr_network_version');
+    delete_site_option('shortlinkr_network_version');
 }
 
-// Check if this is a multisite uninstall
 if (is_multisite()) {
-    shortcodr_delete_network_data();
+    shortlinkr_delete_network_data();
 } else {
-    shortcodr_delete_single_site_data();
+    shortlinkr_delete_single_site_data();
 }
 
-// Flush rewrite rules
 flush_rewrite_rules();

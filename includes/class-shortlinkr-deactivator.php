@@ -1,7 +1,6 @@
 <?php
 
-// Plugin deactivation
-class shortcodr_Deactivator {
+class shortlinkr_Deactivator {
 
     public static function deactivate($network_wide = false) {
         

@@ -1,12 +1,11 @@
 <?php
 
-// Database operations
-class shortcodr_Database {
+class shortlinkr_Database {
 
     public static function get_campaigns($status = 'active') {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_campaigns';
+        $table_name = $wpdb->prefix . 'shortlinkr_campaigns';
         
         if ($status === 'all') {
             $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY name ASC");
@@ -20,7 +19,7 @@ class shortcodr_Database {
     public static function get_campaign($id) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_campaigns';
+        $table_name = $wpdb->prefix . 'shortlinkr_campaigns';
         $result = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
         
         return $result;
@@ -29,7 +28,7 @@ class shortcodr_Database {
     public static function create_campaign($name) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_campaigns';
+        $table_name = $wpdb->prefix . 'shortlinkr_campaigns';
         
         $result = $wpdb->insert(
             $table_name,
@@ -50,7 +49,7 @@ class shortcodr_Database {
     public static function update_campaign($id, $name) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_campaigns';
+        $table_name = $wpdb->prefix . 'shortlinkr_campaigns';
         
         $result = $wpdb->update(
             $table_name,
@@ -68,8 +67,8 @@ class shortcodr_Database {
     public static function delete_campaign($id) {
         global $wpdb;
         
-        $campaigns_table = $wpdb->prefix . 'shortcodr_campaigns';
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
+        $campaigns_table = $wpdb->prefix . 'shortlinkr_campaigns';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
         
         $url_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $urls_table WHERE campaign_id = %d", $id));
         
@@ -103,8 +102,8 @@ class shortcodr_Database {
         
         $args = wp_parse_args($args, $defaults);
         
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
-        $campaigns_table = $wpdb->prefix . 'shortcodr_campaigns';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
+        $campaigns_table = $wpdb->prefix . 'shortlinkr_campaigns';
         
         $where_conditions = array();
         $where_values = array();
@@ -161,7 +160,7 @@ class shortcodr_Database {
         
         $args = wp_parse_args($args, $defaults);
         
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
         
         $where_conditions = array();
         $where_values = array();
@@ -202,7 +201,7 @@ class shortcodr_Database {
     public static function get_url($id) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_urls';
+        $table_name = $wpdb->prefix . 'shortlinkr_urls';
         $result = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
         
         return $result;
@@ -211,7 +210,7 @@ class shortcodr_Database {
     public static function get_url_by_slug($slug) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_urls';
+        $table_name = $wpdb->prefix . 'shortlinkr_urls';
         $result = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE slug = %s AND status = 'active'", $slug));
         
         return $result;
@@ -220,7 +219,7 @@ class shortcodr_Database {
     public static function create_url($slug, $target_url, $campaign_id = null, $redirect_type = 301) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_urls';
+        $table_name = $wpdb->prefix . 'shortlinkr_urls';
         
         $existing = $wpdb->get_var($wpdb->prepare("SELECT id FROM $table_name WHERE slug = %s", $slug));
         if ($existing) {
@@ -249,7 +248,7 @@ class shortcodr_Database {
     public static function update_url($id, $data) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_urls';
+        $table_name = $wpdb->prefix . 'shortlinkr_urls';
         
         $allowed_fields = array('slug', 'target_url', 'campaign_id', 'redirect_type', 'status');
         $update_data = array();
@@ -291,8 +290,8 @@ class shortcodr_Database {
     public static function delete_url($id) {
         global $wpdb;
         
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
-        $analytics_table = $wpdb->prefix . 'shortcodr_analytics';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
+        $analytics_table = $wpdb->prefix . 'shortlinkr_analytics';
         
         $wpdb->delete($analytics_table, array('url_id' => $id), array('%d'));
         
@@ -304,7 +303,7 @@ class shortcodr_Database {
     public static function get_url_analytics($url_id, $days = 30) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_analytics';
+        $table_name = $wpdb->prefix . 'shortlinkr_analytics';
         
         $results = $wpdb->get_results($wpdb->prepare(
             "SELECT view_date, view_count 
@@ -322,7 +321,7 @@ class shortcodr_Database {
     public static function get_url_total_views($url_id) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_analytics';
+        $table_name = $wpdb->prefix . 'shortlinkr_analytics';
         
         $total = $wpdb->get_var($wpdb->prepare(
             "SELECT SUM(view_count) FROM $table_name WHERE url_id = %d",
@@ -335,7 +334,7 @@ class shortcodr_Database {
     public static function record_view($url_id) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_analytics';
+        $table_name = $wpdb->prefix . 'shortlinkr_analytics';
         $today = current_time('Y-m-d');
         
         $result = $wpdb->query($wpdb->prepare(
@@ -352,7 +351,7 @@ class shortcodr_Database {
     public static function generate_random_slug($length = 6) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_urls';
+        $table_name = $wpdb->prefix . 'shortlinkr_urls';
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         
         do {
@@ -370,8 +369,8 @@ class shortcodr_Database {
     public static function export_urls_to_json() {
         global $wpdb;
         
-        $urls_table = $wpdb->prefix . 'shortcodr_urls';
-        $campaigns_table = $wpdb->prefix . 'shortcodr_campaigns';
+        $urls_table = $wpdb->prefix . 'shortlinkr_urls';
+        $campaigns_table = $wpdb->prefix . 'shortlinkr_campaigns';
         
         $urls = $wpdb->get_results(
             "SELECT u.slug, u.target_url, u.redirect_type, u.status, c.name as campaign_name
@@ -381,7 +380,7 @@ class shortcodr_Database {
         );
         
         $export_data = array(
-            'version' => SHORTCODR_VERSION,
+            'version' => SHORTLINKR_VERSION,
             'exported_at' => current_time('mysql'),
             'site_url' => get_site_url(),
             'urls' => $urls
@@ -396,7 +395,7 @@ class shortcodr_Database {
         if (json_last_error() !== JSON_ERROR_NONE) {
             return array(
                 'success' => false,
-                'error' => __('Invalid JSON format', 'shortcodr'),
+                'error' => __('Invalid JSON format', 'shortlinkr'),
                 'imported' => 0,
                 'skipped' => 0,
                 'errors' => 0
@@ -406,7 +405,7 @@ class shortcodr_Database {
         if (!isset($data['urls']) || !is_array($data['urls'])) {
             return array(
                 'success' => false,
-                'error' => __('Invalid data structure', 'shortcodr'),
+                'error' => __('Invalid data structure', 'shortlinkr'),
                 'imported' => 0,
                 'skipped' => 0,
                 'errors' => 0
@@ -459,7 +458,7 @@ class shortcodr_Database {
         if (empty($lines)) {
             return array(
                 'success' => false,
-                'error' => __('Empty CSV file', 'shortcodr'),
+                'error' => __('Empty CSV file', 'shortlinkr'),
                 'imported' => 0,
                 'skipped' => 0,
                 'errors' => 0
@@ -524,7 +523,7 @@ class shortcodr_Database {
     private static function get_campaign_id_by_name($name) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'shortcodr_campaigns';
+        $table_name = $wpdb->prefix . 'shortlinkr_campaigns';
         $id = $wpdb->get_var($wpdb->prepare(
             "SELECT id FROM $table_name WHERE name = %s LIMIT 1",
             $name
@@ -543,14 +542,14 @@ class shortcodr_Database {
         if (empty($pattern)) {
             return array(
                 'valid' => false,
-                'message' => __('Base pattern cannot be empty', 'shortcodr')
+                'message' => __('Base pattern cannot be empty', 'shortlinkr')
             );
         }
         
         if (!preg_match('/^[a-zA-Z0-9\-_]+$/', $pattern)) {
             return array(
                 'valid' => false,
-                'message' => __('Base pattern can only contain letters, numbers, hyphens and underscores', 'shortcodr')
+                'message' => __('Base pattern can only contain letters, numbers, hyphens and underscores', 'shortlinkr')
             );
         }
         
@@ -561,7 +560,7 @@ class shortcodr_Database {
                 return array(
                     'valid' => false,
                     'message' => sprintf(
-                        __('Pattern conflicts with post type "%s" (slug: %s)', 'shortcodr'),
+                        __('Pattern conflicts with post type "%s" (slug: %s)', 'shortlinkr'),
                         $post_type->label,
                         $post_type->rewrite['slug']
                     )
@@ -572,7 +571,7 @@ class shortcodr_Database {
                 return array(
                     'valid' => false,
                     'message' => sprintf(
-                        __('Pattern conflicts with post type "%s"', 'shortcodr'),
+                        __('Pattern conflicts with post type "%s"', 'shortlinkr'),
                         $post_type->label
                     )
                 );
@@ -585,7 +584,7 @@ class shortcodr_Database {
             return array(
                 'valid' => false,
                 'message' => sprintf(
-                    __('Pattern "%s" is a reserved WordPress slug', 'shortcodr'),
+                    __('Pattern "%s" is a reserved WordPress slug', 'shortlinkr'),
                     $pattern
                 )
             );
@@ -593,7 +592,7 @@ class shortcodr_Database {
         
         return array(
             'valid' => true,
-            'message' => __('Pattern is valid', 'shortcodr')
+            'message' => __('Pattern is valid', 'shortlinkr')
         );
     }
 }

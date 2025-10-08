@@ -1,15 +1,16 @@
-# Shortcodr
+# Shortlinkr
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/manualdousuario/shortcodr/)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/manualdousuario/shortlinkr/)
 [![WordPress](https://img.shields.io/badge/wordpress-6.7+-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/php-7.4+-purple.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/license-GPL%20v2-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![Multisite](https://img.shields.io/badge/multisite-compatible-green.svg)](https://wordpress.org/support/article/create-a-network/)
 
 Shorten links, organize campaigns, and see who's clicking - all from your WordPress dashboard.
 
 ## 📋 What is this?
 
-Shortcodr turns long, messy URLs into short, clean links that are easy to share. Perfect for social media, emails, and marketing campaigns. Best part? You control everything from your WordPress dashboard.
+Shortlinkr turns long, messy URLs into short, clean links that are easy to share. Perfect for social media, emails, and marketing campaigns. Best part? You control everything from your WordPress dashboard.
 
 ## ✨ What You Can Do
 
@@ -27,20 +28,20 @@ Shortcodr turns long, messy URLs into short, clean links that are easy to share.
 
 1. Log into your WordPress dashboard
 2. Go to **Plugins > Add New**
-3. Search for "Shortcodr"
+3. Search for "Shortlinkr"
 4. Click **Install Now** then **Activate**
 
 ### Manual Installation
 
-1. Download the plugin from the [releases page](https://github.com/manualdousuario/shortcodr/releases)
-2. Upload the `shortcodr` folder to `/wp-content/plugins/`
+1. Download the plugin from the [releases page](https://github.com/manualdousuario/shortlinkr/releases)
+2. Upload the `shortlinkr` folder to `/wp-content/plugins/`
 3. Activate the plugin from your WordPress dashboard
 
 ## 🚀 How to Use
 
 ### Create a Short Link
 
-1. Go to **Shortcodr** in your WordPress menu
+1. Go to **Shortlinkr** in your WordPress menu
 2. Click **Add New**
 3. Paste the link you want to shorten
 4. Pick a custom code if you want
@@ -49,20 +50,20 @@ Shortcodr turns long, messy URLs into short, clean links that are easy to share.
 
 ### Manage Campaigns
 
-1. Go to **Shortcodr > Campaigns**
+1. Go to **Shortlinkr > Campaigns**
 2. Create campaigns to organize your links
 3. Add links to the right campaigns
 4. See stats for each campaign
 
 ### View Stats
 
-1. Go to **Shortcodr > URLs**
+1. Go to **Shortlinkr > URLs**
 2. Click any link to see details
 3. Check clicks, referrers, and other data
 
 ### Import and Export
 
-1. Go to **Shortcodr > Import/Export**
+1. Go to **Shortlinkr > Import/Export**
 2. Export your links as JSON or CSV
 3. Import links you exported before
 
@@ -76,7 +77,7 @@ Shortcodr turns long, messy URLs into short, clean links that are easy to share.
 
 ### Configure the Plugin
 
-Go to **Shortcodr > Settings** to set up:
+Go to **Shortlinkr > Settings** to set up:
 
 - Default URL prefix
 - Analytics options

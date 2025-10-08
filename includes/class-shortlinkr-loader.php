@@ -1,7 +1,6 @@
 <?php
 
-// Manages actions and filters registration
-class shortcodr_Loader {
+class shortlinkr_Loader {
 
     protected $actions;
     protected $filters;

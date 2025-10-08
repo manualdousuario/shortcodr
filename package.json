@@ -1,7 +1,7 @@
 {
-  "name": "shortcodr",
+  "name": "shortlinkr",
   "version": "1.0.0",
-  "description": "Shortcodr",
+  "description": "Shortlinkr",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch"
